@@ -1,0 +1,47 @@
+{
+  "skill_name": "yaml-wizzard",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Wenn Bewegung im Flur erkannt wird und es dunkel ist, schalte das Flurlicht für 3 Minuten ein",
+      "expected_output": "Valide YAML mit state Trigger auf binary_sensor.motion, sun Condition, light.turn_on Action, wait_for_trigger mit for: 3 Min, light.turn_off. Mode restart.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Jeden Morgen um 6:30 unter der Woche: Wenn jemand zuhause ist, fahre die Rollläden hoch und schalte die Kaffeemaschine ein. Am Wochenende erst um 8:00.",
+      "expected_output": "Valide YAML mit zwei time Triggern (6:30 mit Wochentag-Condition, 8:00 mit Wochenend-Condition) oder zwei separate Automationen. Zone/Person Condition, cover und switch Actions.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Wenn die Waschmaschine fertig ist (Power-Sensor fällt unter 5W für 3 Minuten), schicke eine Notification an alle Handys. Wenn nach 15 Minuten niemand reagiert hat, wiederhole die Notification. Maximal 3 Wiederholungen.",
+      "expected_output": "Valide YAML mit numeric_state Trigger (below: 5, for: 3 Min), repeat Action (count: 3) mit notify und delay 15 Min. Wait oder input_boolean für Acknowledge.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Ich habe eine kaputte Automation, kannst du die fixen?\n\nalias: Licht Test\ntrigger:\n  - platform: state\n    entity_id: light.wohnzimmer\n    to: on\naction:\n  - service: light.turn_off\n    data:\n      entity_id: light.wohnzimmer",
+      "expected_output": "Fehler identifizieren (platform->trigger, service->action, trigger->triggers, action->actions, to: on als Boolean, entity_id unter data statt target). Korrigierte Version mit Diff-Erklärung.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Erstelle mir ein Abwesenheits-Paket: Wenn keiner zuhause ist, Licht aus, Heizung runter auf 17°C, und simuliere abends zufällig Anwesenheit durch Lichter.",
+      "expected_output": "Multi-Automation-Paket: 1) Zone-Trigger bei letzter Person leave -> Lichter aus, Heizung runter. 2) Anwesenheitssimulation mit time_pattern oder random Delays. Hinweis auf benötigte Helper-Entities.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Was macht diese Automation?\n\n- id: \"washer_notify\"\n  alias: \"Waschmaschine fertig\"\n  mode: single\n  triggers:\n    - trigger: numeric_state\n      entity_id: sensor.washing_machine_power\n      below: 5\n      for: \"00:03:00\"\n  actions:\n    - action: notify.mobile_app_phone\n      data:\n        title: \"Waschmaschine\"\n        message: \"Die Wäsche ist fertig!\"",
+      "expected_output": "Klartext-Erklärung: Wenn der Stromverbrauch der Waschmaschine 3 Min unter 5W bleibt, kommt eine Push-Nachricht. Edge Cases: mode single, kein Repeat, kein Acknowledge. Angebot für Kommentierung.",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Wenn Bewegung im Flur erkannt wird und es dunkel ist, schalte das Flurlicht für 3 Minuten ein. Bitte im Lernmodus mit ausführlichen Kommentaren.",
+      "expected_output": "Gleiche Automation wie TC1, aber mit Lernmodus-Kommentaren: WARUM jede Syntax so ist, Alternativen, was passiert wenn man etwas weglässt. Keine redundanten Kommentare.",
+      "files": []
+    }
+  ]
+}
